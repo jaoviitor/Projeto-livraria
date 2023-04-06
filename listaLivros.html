@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Livros</title>
+    <link rel="stylesheet" href="./styleListaLivros.css">
+  </head>
+  <body>
+    <h1>Lista de Livros</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Autor</th>
+          <th>Editora</th>
+          <th>Ano</th>
+          <th>Preço</th>
+        </tr>
+      </thead>
+      <tbody id="lista-livros"></tbody>
+    </table>
+    <img src="./img/livros.svg" alt="Imagem" class="imagem">
+    <script>
+      const listaLivros = document.getElementById("lista-livros");
+
+      fetch("http://localhost:3000/livro")
+        .then((response) => response.json())
+        .then((data) => {
+          if (Array.isArray(data)) {
+            data.forEach((livro) => {
+              const li = document.createElement("li");
+              li.textContent = `Nome: ${livro.nome}, Autor: ${livro.autor}, Editora: ${livro.editora}, Ano: ${parseInt(livro.ano)}, Preço: ${livro.preco}`;
+              listaLivros.appendChild(li);
+            });
+          } else {
+            const tbody = document.getElementById('lista-livros');
+            const values = Object.values(data);
+            values.forEach((livro) => {
+                console.log(livro[0].Nome);
+                const tam = livro.length
+                for(i=0; i<tam; i++){
+                    const tr = document.createElement("tr");
+                    const nomeTd = document.createElement('td')
+                    nomeTd.textContent = livro[i].Nome;
+                    tr.appendChild(nomeTd);
+                
+                    const autorTd = document.createElement('td')
+                    autorTd.textContent = livro[i].Autor;
+                    tr.appendChild(autorTd);
+
+                    const editoraTd = document.createElement('td')
+                    editoraTd.textContent = livro[i].Editora;
+                    tr.appendChild(editoraTd);
+
+                    const anoTd = document.createElement('td')
+                    anoTd.textContent = livro[i].Ano;
+                    tr.appendChild(anoTd);
+
+                    const precoTd = document.createElement('td')
+                    precoTd.textContent = livro[i].Preco;
+                    tr.appendChild(precoTd);
+
+                    listaLivros.appendChild(tr);
+                }
+            });
+          }
+        })
+        .catch((error) => console.error(error));
+    </script>
+  </body>
+</html>
