@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
     mysql.getConnection((error, conn) =>{
         if(error){ return res.status(500).send({ error: error }) };
         conn.query(
-            'SELECT * FROM Livro;',
+            'SELECT Nome, Autor, Editora, Ano, Preco FROM Livro;',
             (error, resultado, fields) =>{
                 if(error){ return res.status(500).send({ error: error }) };
                 return res.status(200).send({response: resultado});
@@ -39,12 +39,12 @@ router.post('/', (req, res, next) => {
     })
 });
 //RETORNA OS DADOS DE UM LIVRO
-router.get('/:CodEmpresa', (req, res, next) =>{
+router.get('/:CodLivro', (req, res, next) =>{
     mysql.getConnection((error, conn) =>{
         if(error){ return res.status(500).send({ error: error }) };
         conn.query(
-            'SELECT * FROM Empresa WHERE CodEmpresa = ?;',
-            [req.params.CodEmpresa],
+            'SELECT Nome, Autor, Editora, Ano, Preco FROM Livro WHERE CodLivro = ?;',
+            [req.params.CodLivro],
             (error, resultado, fields) =>{
                 if(error){ return res.status(500).send({ error: error }) };
                 return res.status(200).send({response: resultado});
