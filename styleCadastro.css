@@ -1,0 +1,62 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@700&display=swap');
+
+body {
+    background-image: url("./img/backgroundCadastro.png");
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+h1 {
+    font-family: 'Signika Negative', sans-serif;
+    text-align: center;
+    margin-top: 50px;
+  }
+  form {
+    width: 500px;
+    margin: 50px auto;
+    background-color: #261C1A;
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    float: right;
+    margin-right: 200px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #D5CCC7;
+    font-family: 'Ubuntu', sans-serif;
+  }
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #ADA0A2;
+    border: 1px solid #ADA0A2;
+    border-radius: 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  input[type="submit"] {
+    background-color: #ADA0A2;
+    color: #454041;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  input[type="submit"]:hover {
+    background-color: #D5CCC7;
+  }
+
+  .imagem {
+    float: left;
+    width: 600px; /* ajuste a largura conforme necessário */
+    margin-left: 100px; /* ajuste a margem conforme necessário */
+    margin-top: 5px;
+  }

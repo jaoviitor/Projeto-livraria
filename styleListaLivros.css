@@ -1,14 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@700&display=swap');
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #D5CCC7;
+    background-image: url("./img/backgroundLista.png");
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
   }
   
   h1 {
     text-align: center;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Signika Negative', sans-serif;
   }
 
   table {
