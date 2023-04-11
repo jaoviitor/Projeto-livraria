@@ -8,8 +8,26 @@ router.get('/', (req, res, next) => {
         if(error){ return res.status(500).send({ error: error }) };
         conn.query(
             'SELECT * FROM Livro;',
-            (error, resultado, fields) =>{
+            (error, result, fields) =>{
                 if(error){ return res.status(500).send({ error: error }) };
+                const response = {
+                    quantidade: result.length,
+                    produtos: result.map(prod =>{
+                        return {
+                            CodLivro: prod.CodLivro,
+                            Nome: prod.Nome,
+                            Autor: prod.Autor,
+                            Editora: prod.Editora,
+                            Ano: prod.Ano,
+                            Preco: prod.Preco,
+                            request: {
+                                tipo: 'GET',
+                                descricao: 'Retorna todos os livros',
+                                url: 'http://localhost:3000/livro/' + prod.CodLivro
+                            }
+                        }
+                    })
+                }
                 return res.status(200).send({response: resultado});
             }
         )
@@ -23,7 +41,7 @@ router.post('/', (req, res, next) => {
         conn.query(
             'INSERT INTO Livro (Nome, Autor, Editora, Ano, Preco) VALUES (?,?,?,?,?)',
             [req.body.nome, req.body.autor, req.body.editora, req.body.ano, req.body.preco],
-            (error, resultado, field) => {
+            (error, result, field) => {
                 conn.release();
                 if(error){ return res.status(500).send({ error: error }) };
 
@@ -41,9 +59,9 @@ router.get('/:CodLivro', (req, res, next) =>{
         conn.query(
             'SELECT Nome, Autor, Editora, Ano, Preco FROM Livro WHERE CodLivro = ?;',
             [req.params.CodLivro],
-            (error, resultado, fields) =>{
+            (error, result, fields) =>{
                 if(error){ return res.status(500).send({ error: error }) };
-                return res.status(200).send({response: resultado});
+                return res.status(200).send({response: result});
             }
         )
     })
@@ -55,7 +73,7 @@ router.patch('/', (req, res, next) => {
         conn.query(
             `UPDATE Livro SET Nome = ?, Autor = ?, Editora = ?, Ano = ?, Preco = ? WHERE CodLivro = ?`,
             [req.body.Nome, req.body.Autor, req.body.Editora, req.body.Ano, req.body.Preco, req.body.CodProduto],
-            (error, resultado, field) => {
+            (error, result, field) => {
                 conn.release();
                 if(error){ return res.status(500).send({ error: error }) };
 
@@ -72,7 +90,7 @@ router.delete('/', (req, res, next) => {
         if(error){ return res.status(500).send({ error: error }) };
         conn.query(
             `DELETE FROM Livro WHERE CodLivro = ?`, [req.body.CodProduto],
-            (error, resultado, field) => {
+            (error, result, field) => {
                 conn.release();
                 if(error){ return res.status(500).send({ error: error }) };
 
