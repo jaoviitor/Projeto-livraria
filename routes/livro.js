@@ -4,10 +4,6 @@ const mysql = require('../mysql').pool;
 
 //RETORNA OS LIVROS CADASTRADOS
 router.get('/', (req, res, next) => {
-    //res.status(200).send({
-    //    mensagem: 'Retorna todas as solicitações'
-    //});
-
     mysql.getConnection((error, conn) =>{
         if(error){ return res.status(500).send({ error: error }) };
         conn.query(
@@ -17,7 +13,7 @@ router.get('/', (req, res, next) => {
                 return res.status(200).send({response: resultado});
             }
         )
-    })
+    });
     
 });
 //CADASTRA UM NOVO LIVRO NO BANCO
@@ -54,9 +50,21 @@ router.get('/:CodLivro', (req, res, next) =>{
 });
 //ALTERA UM LIVRO
 router.patch('/', (req, res, next) => {
-    res.status(201).send({
-        mensagem: 'Usando o PATCH dentro da rota de solicitacao'
-    });
+    mysql.getConnection((error, conn) =>{
+        if(error){ return res.status(500).send({ error: error }) };
+        conn.query(
+            `UPDATE Livro SET Nome = ?, Autor = ?, Editora = ?, Ano = ?, Preco = ? WHERE CodLivro = ?`,
+            [req.body.Nome, req.body.Autor, req.body.Editora, req.body.Ano, req.body.Preco, req.body.CodProduto],
+            (error, resultado, field) => {
+                conn.release();
+                if(error){ return res.status(500).send({ error: error }) };
+
+                res.status(202).send({
+                    mensagem: 'Livro Alterado com sucesso!'
+                })
+            }
+        )
+    })
 });
 //EXCLUI UM LIVRO
 router.delete('/', (req, res, next) => {
