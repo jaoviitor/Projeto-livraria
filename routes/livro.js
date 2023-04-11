@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
     mysql.getConnection((error, conn) =>{
         if(error){ return res.status(500).send({ error: error }) };
         conn.query(
-            'SELECT Nome, Autor, Editora, Ano, Preco FROM Livro;',
+            'SELECT * FROM Livro;',
             (error, resultado, fields) =>{
                 if(error){ return res.status(500).send({ error: error }) };
                 return res.status(200).send({response: resultado});
@@ -60,16 +60,27 @@ router.patch('/', (req, res, next) => {
                 if(error){ return res.status(500).send({ error: error }) };
 
                 res.status(202).send({
-                    mensagem: 'Livro Alterado com sucesso!'
+                    mensagem: 'Livro alterado com sucesso!'
                 })
             }
         )
-    })
+    });
 });
 //EXCLUI UM LIVRO
 router.delete('/', (req, res, next) => {
-    res.status(201).send({
-        mensagem: 'Usando o DELETE dentro da rota de solicitacao'
+    mysql.getConnection((error, conn) =>{
+        if(error){ return res.status(500).send({ error: error }) };
+        conn.query(
+            `DELETE FROM Livro WHERE CodLivro = ?`, [req.body.CodProduto],
+            (error, resultado, field) => {
+                conn.release();
+                if(error){ return res.status(500).send({ error: error }) };
+
+                res.status(202).send({
+                    mensagem: 'Livro removido com sucesso!'
+                })
+            }
+        )
     });
 });
 
